@@ -1,18 +1,23 @@
 {% load i18n static cms_tags menu_tags sekizai_tags %}
-
-{% addtoblock "js" %}<script src="{% static 'js/libs/class.min.js' %}"></script>{% endaddtoblock %}
-{% addtoblock "js" %}<script src="{% static 'js/plugins/cl.accordion.js' %}"></script>{% endaddtoblock "js" %}
-{% addtoblock "js" %}
-<script>
-$(document).ready(function ($) {
-    // option accordion
-    var accordion_{{ instance.pk }} = new Cl.Accordion('#accordion-{{ accordion.pk }}',{
-        'index': 0,
-        'event': 'click'
+{% if instance.bootstrap %}
+    {% addtoblock "js" %}<script src="{% static 'js/bootstrap.min.js' %}"></script>{% endaddtoblock %}
+{% else %}
+    {% addtoblock "js" %}<script src="{% static 'js/libs/class.min.js' %}"></script>{% endaddtoblock %}
+    {% addtoblock "js" %}<script src="{% static 'js/plugins/cl.accordion.js' %}"></script>{% endaddtoblock "js" %}
+{% endif %}
+{% if not instance.bootstrap %}
+    {% addtoblock "js" %}
+    <script>
+    $(document).ready(function ($) {
+        // option accordion
+        var accordion_{{ instance.pk }} = new Cl.Accordion('#accordion-{{ accordion.pk }}',{
+            'index': 0,
+            'event': 'click'
+        });
     });
-});
-</script>
-{% endaddtoblock "js" %}
+    </script>
+    {% endaddtoblock "js" %}
+{% endif %}
 <div class="accordion" id="accordion-{{ accordion.pk }}">
     {% for plugin in accordion.child_plugin_instances %}
 		{% with forloop as parentloop %}{% render_plugin plugin %}{% endwith %}
