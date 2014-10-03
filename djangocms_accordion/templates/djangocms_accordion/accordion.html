@@ -1,11 +1,11 @@
 {% load i18n static cms_tags menu_tags sekizai_tags %}
-{% if instance.bootstrap %}
+{% if accordion.bootstrap %}
     {% addtoblock "js" %}<script src="{% static 'js/bootstrap.min.js' %}"></script>{% endaddtoblock %}
 {% else %}
     {% addtoblock "js" %}<script src="{% static 'js/libs/class.min.js' %}"></script>{% endaddtoblock %}
     {% addtoblock "js" %}<script src="{% static 'js/plugins/cl.accordion.js' %}"></script>{% endaddtoblock "js" %}
 {% endif %}
-{% if not instance.bootstrap %}
+{% if not accordion.bootstrap %}
     {% addtoblock "js" %}
     <script>
     $(document).ready(function ($) {
